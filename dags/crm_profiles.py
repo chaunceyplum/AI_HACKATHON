@@ -8,8 +8,13 @@ from pyiceberg.schema import Schema
 from pyiceberg.types import NestedField, StringType, IntegerType, TimestampType
 import pyarrow as pa
 import os
-os.environ["AWS_ACCESS_KEY_ID"] = "AKIAR4K4LE4XMUIPZW54"
-os.environ["AWS_SECRET_ACCESS_KEY"] = "ExLYt7LH7iiSbPUpqQmtp4tQEPhjHNdYA6+CUxsF"
+from dotenv import load_dotenv
+from faker import Faker
+
+load_dotenv()
+
+AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"] 
+AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"] 
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
@@ -20,7 +25,7 @@ default_args = {
 
 def fetch_and_write_to_iceberg(**context):
     # Fetch data from Mockaroo endpoint
-    url = "https://api.mockaroo.com/api/61b86990?count=3&key=ab78c110"
+    url = "https://api.mockaroo.com/api/61b86990?count=3000&key=ab78c110"
     response = requests.get(url)
     response.raise_for_status()
     data = response.json()
